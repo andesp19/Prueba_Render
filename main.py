@@ -11,11 +11,11 @@ app = FastAPI(title='Proyecto I')
 
 # Carga los datos una sola vez al iniciar la aplicación
 dfETL = pd.read_csv('movies_ETL.csv', parse_dates=['release_date'])
-dfr1 = dfETL[['id', 'title', 'genres', 'overview']].fillna({'overview': ' '})
+#dfr1 = dfETL[['id', 'title', 'genres', 'overview']].fillna({'overview': ' '})
 
 # Crea el vectorizador y ajusta el texto
-cv = CountVectorizer(max_features=6500, stop_words='english')
-vectors = cv.fit_transform(dfr1['overview']).toarray()
+#cv = CountVectorizer(max_features=6500, stop_words='english')
+#vectors = cv.fit_transform(dfr1['overview']).toarray()
 
 #ps = PorterStemmer()
 #similarity = cosine_similarity(vectors)
