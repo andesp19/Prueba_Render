@@ -173,7 +173,7 @@ def get_director(nombre_director: str) -> Dict[str, Any]:
     }
 
 
-from sklearn.metrics.pairwise import cosine_similarity
+#from sklearn.metrics.pairwise import cosine_similarity
 
 # @app.get("/recommend/{movie}")
 # def recommend(movie: str):
