@@ -175,65 +175,66 @@ def get_director(nombre_director: str) -> Dict[str, Any]:
 
 from sklearn.metrics.pairwise import cosine_similarity
 
-@app.get("/recommend/{movie}")
-def recommend(movie: str):
-    data = dfETL
-    dfr1 = data[['id', 'title', 'genres', 'overview']]
+# @app.get("/recommend/{movie}")
+# def recommend(movie: str):
+#     data = dfETL
+#     dfr1 = data[['id', 'title', 'genres', 'overview']]
 
-    # Fill in the missing values in the overview column with a space
-    dfr1 = dfr1.fillna({'overview': ' '})
+#     # Fill in the missing values in the overview column with a space
+#     dfr1 = dfr1.fillna({'overview': ' '})
 
-    # Create the vectorizer and fit it to the text
-    cv = CountVectorizer(max_features=2000, stop_words='english')
+#     # Create the vectorizer and fit it to the text
+#     cv = CountVectorizer(max_features=2000, stop_words='english')
 
-    # Get the vectors for the overview column
-    vectors = cv.fit_transform(dfr1['overview']).toarray()
+#     # Get the vectors for the overview column
+#     vectors = cv.fit_transform(dfr1['overview']).toarray()
 
-    ps=PorterStemmer()
+#     ps=PorterStemmer()
 
-    #Funcion stem corregida para que reciba un string en lugar de un objeto
-    import re
+#     #Funcion stem corregida para que reciba un string en lugar de un objeto
+#     import re
 
-    def stem(text):
-        y = []
-        for i in re.split(r'\W+', text):
-            y.append(ps.stem(i))
-        return " ".join(y)
+#     def stem(text):
+#         y = []
+#         for i in re.split(r'\W+', text):
+#             y.append(ps.stem(i))
+#         return " ".join(y)
 
-    similarity=cosine_similarity(vectors)
+#     similarity=cosine_similarity(vectors)
 
 
-    # Obtiene el índice de la película en el DataFrame new_df
-    movie_index = dfr1[dfr1['title'] == movie].index[0]
-    # Obtiene el género de la película a partir de su índice
-    movie_genre = dfr1.iloc[movie_index]['genres']
+#     # Obtiene el índice de la película en el DataFrame new_df
+#     movie_index = dfr1[dfr1['title'] == movie].index[0]
+#     # Obtiene el género de la película a partir de su índice
+#     movie_genre = dfr1.iloc[movie_index]['genres']
 
-    #Calcula las distancias entre la película y todas las demás películas en el DataFrame
-    distances = similarity[movie_index]
-    # Ordena las distancias en orden descendente y obtiene una lista de tuplas (índice, distancia)
-    movies_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])[1:]
+#     #Calcula las distancias entre la película y todas las demás películas en el DataFrame
+#     distances = similarity[movie_index]
+#     # Ordena las distancias en orden descendente y obtiene una lista de tuplas (índice, distancia)
+#     movies_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])[1:]
 
-    #Inicializa un contador para llevar la cuenta de cuántas películas se han mostrado
-    count = 0
-    # Lista para almacenar las películas recomendadas
-    recommended_movies = []
+#     #Inicializa un contador para llevar la cuenta de cuántas películas se han mostrado
+#     count = 0
+#     # Lista para almacenar las películas recomendadas
+#     recommended_movies = []
     
-    # Recorre la lista de películas recomendadas
-    for i in movies_list:
-        # Verifica si la película recomendada tiene el mismo género que la película original
-        if dfr1.iloc[i[0]]['genres'] == movie_genre:
-            # Si es así, agrega el título de la película recomendada a la lista
-            recommended_movies.append(dfr1.iloc[i[0]].title)
-            # Incrementa el contador
-            count += 1
-            # Verifica si ya se han mostrado cinco películas
-            if count == 5:
-                # Si es así, detiene el bucle
-                break
+#     # Recorre la lista de películas recomendadas
+#     for i in movies_list:
+#         # Verifica si la película recomendada tiene el mismo género que la película original
+#         if dfr1.iloc[i[0]]['genres'] == movie_genre:
+#             # Si es así, agrega el título de la película recomendada a la lista
+#             recommended_movies.append(dfr1.iloc[i[0]].title)
+#             # Incrementa el contador
+#             count += 1
+#             # Verifica si ya se han mostrado cinco películas
+#             if count == 5:
+#                 # Si es así, detiene el bucle
+#                 break
     
-    return {
-        "mensaje": f"Películas recomendadas: {recommended_movies}"
-    }
+#     return {
+#         "mensaje": f"Películas recomendadas: {recommended_movies}"
+#     }
+
 
 
 
